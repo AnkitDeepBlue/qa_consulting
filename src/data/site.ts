@@ -173,6 +173,7 @@ export const services: Service[] = [
       'Live coding practice: Python, Selenium, Playwright, API testing',
       'Detailed feedback with a personal improvement plan',
       'Resume and LinkedIn profile review',
+      'Prep material included: question bank, coding exercises and checklists',
     ],
     icon: 'M4 5h16v11H8l-4 4V5z M8 9h8 M8 12h5',
   },

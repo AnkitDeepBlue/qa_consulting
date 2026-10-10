@@ -4,6 +4,6 @@ description: "Build fast, reliable UI and API test suites with Playwright, Pytes
 level: Intermediate
 duration: "~10 hours"
 status: coming-soon
-order: 2
+order: 3
 topics: ["Playwright fundamentals", "API + UI hybrid tests", "BDD with pytest-bdd", "Parallel & cross-browser runs", "Debugging flaky tests"]
 ---

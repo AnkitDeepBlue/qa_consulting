@@ -40,6 +40,8 @@ const courses = defineCollection({
     checkoutUrl: z.string().url().optional(),
     // Internal page for free resources (e.g. /courses/qa-roadmap-2026).
     href: z.string().optional(),
+    cta: z.string().optional(),
+    badge: z.string().optional(),
     order: z.number().default(0),
     topics: z.array(z.string()).default([]),
   }),
