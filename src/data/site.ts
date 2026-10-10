@@ -170,7 +170,8 @@ export const services: Service[] = [
     forWho: 'Freshers, professionals after a career gap and QA job seekers',
     deliverables: [
       'SQA concepts, test design and Agile',
-      'Python, Selenium, Playwright and API automation',
+      'Python, Selenium and Playwright automation',
+      'API testing and performance testing',
       'AI testing: self-healing, agents and MCP',
       'Live project with your own framework on GitHub',
       'Resume, LinkedIn and mock interviews; material included',
