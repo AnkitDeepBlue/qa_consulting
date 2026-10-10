@@ -46,6 +46,7 @@ export const innovations = [
     tags: ['Planner', 'Generator', 'Healer', 'Claude & OpenAI', 'CI-ready'],
     code: 'pip install selenium-python-ai-agent',
     link: { href: 'https://pypi.org/project/selenium-python-ai-agent/', label: 'View on PyPI' } as { href: string; label: string } | null,
+    source: 'https://github.com/AnkitDeepBlue/selenium-python-ai-agent' as string | null,
   },
   {
     kind: 'Peer-reviewed · Quest Journals',
@@ -54,6 +55,7 @@ export const innovations = [
     tags: ['White paper', 'Research', 'Published'],
     code: '',
     link: null as { href: string; label: string } | null,
+    source: null as string | null,
   },
 ];
 
@@ -287,24 +289,43 @@ export const experience = [
   },
 ];
 
-export const certifications = [
+export const certifications: { name: string; issuer: string; verify?: string }[] = [
   { name: 'ISTQB® Certified Tester', issuer: 'ISTQB' },
-  { name: 'SAFe® POPM', issuer: 'Scaled Agile' },
-  { name: 'PCAP™ Certified Associate in Python', issuer: 'Python Institute' },
-  { name: 'AI Developer', issuer: 'Certification' },
-  { name: 'Agentic AI (LangChain)', issuer: 'Certification' },
-  { name: 'Data Science', issuer: 'Certification' },
-  { name: 'Six Sigma White Belt', issuer: 'Certification' },
-  { name: 'Lambda Selenium Python 101', issuer: 'LambdaTest' },
-  { name: 'SME, Test Automation Python (L4)', issuer: 'Internal certification' },
-  { name: 'Functionize AI Testing', issuer: 'Functionize' },
+  { name: 'SAFe® 6 Product Owner / Product Manager', issuer: 'Scaled Agile' },
+  { name: 'PCAP™ Certified Associate Python Programmer', issuer: 'Python Institute' },
+  { name: 'GL Certified AI Professional: Agentic AI (LangChain)', issuer: 'GlobalLogic' },
+  { name: 'GL Certified AI Professional: Data Science', issuer: 'GlobalLogic' },
+  { name: 'GL Certified AI Associate: Developers', issuer: 'GlobalLogic' },
+  { name: 'Test Automation (Python) Competency, Level 4', issuer: 'Persistent University' },
+  { name: 'GenAI Foundation: GenAI-Assisted Coding', issuer: 'Persistent University' },
+  { name: 'Ethics in the Age of Generative AI', issuer: 'LinkedIn Learning' },
+  { name: 'Selenium Python 101', issuer: 'LambdaTest' },
+  { name: 'Six Sigma White Belt', issuer: 'Council for Six Sigma Certification' },
+  { name: 'Functionize AI Testing Certification', issuer: 'Functionize · Dec 2023', verify: 'https://certification.functionize.com/certificate/ODYxMzhfMTYzMjU1OA' },
 ];
 
 export const awards = [
-  'Two-time Spotlight of the Month, GlobalLogic',
+  'Two-time Spotlight of the Month, GlobalLogic (Jan & Jun 2026)',
   'Bravo Team Award for Leadership, Persistent Systems',
   'Excellence Award and Pat on the Back recognitions',
 ];
+
+// Certificate & award gallery. `file` = image name in src/assets/credentials (without .jpg).
+export const credentials = [
+  { kind: 'award', file: 'globallogic-spotlight-jun-2026', title: 'Spotlight of the Month', issuer: 'GlobalLogic', date: 'Jun 2026' },
+  { kind: 'award', file: 'globallogic-spotlight-jan-2026', title: 'Spotlight of the Month', issuer: 'GlobalLogic', date: 'Jan 2026' },
+  { kind: 'award', file: 'persistent-bravo-award', title: 'Bravo Team Award for Leadership', issuer: 'Persistent Systems', date: '' },
+  { kind: 'certification', file: 'gl-ai-203a-agentic-ai', title: 'Certified AI Professional: Agentic AI (LangChain)', issuer: 'GlobalLogic', date: 'Apr 2026' },
+  { kind: 'certification', file: 'gl-ai-201-data-science', title: 'Certified AI Professional: Data Science', issuer: 'GlobalLogic', date: 'May 2026' },
+  { kind: 'certification', file: 'gl-ai-101-ai-associate', title: 'Certified AI Associate: Developers', issuer: 'GlobalLogic', date: 'Apr 2026' },
+  { kind: 'certification', file: 'pcap-python', title: 'PCAP™ Certified Associate Python Programmer', issuer: 'Python Institute', date: 'Jan 2025' },
+  { kind: 'certification', file: 'safe-popm', title: 'Certified SAFe® 6 Product Owner / Product Manager', issuer: 'Scaled Agile', date: '' },
+  { kind: 'certification', file: 'persistent-test-automation-python-l4', title: 'Test Automation (Python) Competency, Level 4', issuer: 'Persistent University', date: 'FY 2024' },
+  { kind: 'certification', file: 'persistent-genai-foundation', title: 'GenAI Foundation: GenAI-Assisted Coding', issuer: 'Persistent University', date: 'FY 2023' },
+  { kind: 'certification', file: 'linkedin-ethics-genai', title: 'Ethics in the Age of Generative AI', issuer: 'LinkedIn Learning', date: 'Nov 2025' },
+  { kind: 'certification', file: 'six-sigma-white-belt', title: 'Six Sigma White Belt', issuer: 'Council for Six Sigma Certification', date: 'Jun 2024' },
+  { kind: 'certification', file: 'lambdatest-selenium-python-101', title: 'Selenium Python 101', issuer: 'LambdaTest', date: 'Aug 2023' },
+] as const;
 
 export const domains = [
   { name: 'AI/ML & Forecasting', icon: 'M4 19h16 M5 15l4-4 3 3 6-7' },

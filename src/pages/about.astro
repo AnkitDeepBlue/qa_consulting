@@ -6,6 +6,7 @@ import CTA from '../components/CTA.astro';
 import CompanyStrip from '../components/CompanyStrip.astro';
 import Innovation from '../components/Innovation.astro';
 import Expertise from '../components/Expertise.astro';
+import Credentials from '../components/Credentials.astro';
 import photo from '../assets/ankit.webp';
 import { site, highlights, experience, awards, education, domains, certifications } from '../data/site';
 
@@ -40,11 +41,11 @@ const facts = [
         <p class="eyebrow">Portfolio</p>
         <h1 class="mt-3 text-4xl font-extrabold sm:text-5xl">Ankit Tripathi</h1>
         <p class="mt-3 text-lg font-semibold text-accent-700 dark:text-accent-400">
-          QA Consultant · Senior Lead SDET · Test Architect · QA Manager
+          QA Consultant · Test Architect · Senior Lead SDET · QA Manager
         </p>
         <div class="mt-6 space-y-4 text-lg text-ink-600 dark:text-ink-300">
           <p>
-            Over 12+ years at global MNCs, I have grown from a hands-on QA engineer to Senior Lead SDET, Test Architect and
+            Over 12+ years at global MNCs, I have grown from a hands-on QA engineer to Test Architect, Senior Lead SDET and
             QA Manager, leading 100+ QA engineers, building automation frameworks from scratch and bringing agentic
             AI into everyday testing.
           </p>
@@ -100,9 +101,11 @@ const facts = [
     </div>
   </section>
 
-  <Innovation />
+  <Innovation showDeck />
 
   <Expertise heading="What I bring to the table" />
+
+  <Credentials />
 
   <!-- Career -->
   <section class="section">

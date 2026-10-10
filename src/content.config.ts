@@ -38,6 +38,8 @@ const courses = defineCollection({
     // Phase 2: price + checkout link (Razorpay / Stripe / Lemon Squeezy).
     price: z.string().optional(),
     checkoutUrl: z.string().url().optional(),
+    // Internal page for free resources (e.g. /courses/qa-roadmap-2026).
+    href: z.string().optional(),
     order: z.number().default(0),
     topics: z.array(z.string()).default([]),
   }),

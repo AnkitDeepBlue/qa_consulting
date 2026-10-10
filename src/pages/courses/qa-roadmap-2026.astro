@@ -1,0 +1,149 @@
+---
+import Base from '../../layouts/Base.astro';
+import CTA from '../../components/CTA.astro';
+import Share from '../../components/Share.astro';
+
+const steps = [
+  {
+    title: 'Master the QA mindset first',
+    intro: 'Before jumping into tools, learn to think like a professional tester.',
+    points: ['Software testing principles, SDLC and STLC', 'Test techniques: boundary values, equivalence partitioning, exploratory testing', 'Understand how systems work, and how they break'],
+    insight: 'Tools are temporary. Thinking is permanent.',
+  },
+  {
+    title: 'Embrace Agile testing',
+    intro: 'Modern QA is embedded in every sprint, not bolted on at the end.',
+    points: ['Agile and Scrum fundamentals', 'Shift-left testing', 'Own quality from sprint planning onwards'],
+    insight: 'Agile is how most teams work today.',
+  },
+  {
+    title: 'Learn to code (up to OOP)',
+    intro: 'Basic coding knowledge is non-negotiable.',
+    points: ['Pick one language: Python, Java or JavaScript', 'Variables, loops and conditionals', 'Object-oriented programming and debugging'],
+    insight: 'AI can generate code, but you validate and fix it.',
+  },
+  {
+    title: 'Go deep with one automation tool',
+    intro: 'Choose one of Selenium 4, Playwright, Cypress or Robot Framework, and master it.',
+    points: ['Locators and waits', 'Page Object Model', 'Cross-browser testing', 'Debugging failures'],
+    insight: 'Depth beats breadth.',
+  },
+  {
+    title: 'Practise on demo applications',
+    intro: "Don't wait for the perfect project to start learning.",
+    points: ['Use public demo websites', 'Build mock scenarios', 'Automate the edge cases'],
+    insight: "Growth doesn't wait for project allocation.",
+  },
+  {
+    title: 'Master API testing',
+    intro: 'APIs are the backbone of modern applications.',
+    points: ['REST fundamentals and HTTP methods', 'Authentication: JWT and OAuth', 'Automate with proper validations'],
+    insight: 'UI tests validate flows. API tests validate core logic, even before the UI exists.',
+  },
+  {
+    title: 'Build your own mini framework',
+    intro: 'This is where you move from SQA to SDET.',
+    points: ['Use demo UIs and APIs', 'Add configuration, reporting and retries', 'Architect it with BDD or a DSL'],
+    insight: 'This teaches design thinking, not just tools.',
+  },
+  {
+    title: 'Understand CI/CD pipelines',
+    intro: 'Your tests need to run automatically in the pipeline.',
+    points: ['Run tests in GitHub Actions or Jenkins', 'Know where tests fit in a deployment', 'Learn the basics of Azure or AWS'],
+    insight: 'Quality checks must run seamlessly across every environment.',
+  },
+  {
+    title: 'Explore WebDriver BiDi and Vibium',
+    intro: 'The next generation of browser automation is here.',
+    points: ['Learn WebDriver BiDi', 'Explore Vibium', 'Understand intent-driven automation'],
+    insight: 'Stay ahead of where browser automation is heading.',
+  },
+  {
+    title: 'Leverage AI with MCP',
+    intro: 'AI is transforming how we test software.',
+    points: ['Understand the Model Context Protocol (MCP)', 'Try Playwright with an MCP-enabled AI assistant', 'Use AI for test generation and failure analysis'],
+    insight: "AI amplifies skills; it doesn't replace judgment.",
+  },
+  {
+    title: 'Keep exploring',
+    intro: 'Stay curious and keep an eye on:',
+    points: ['AI-powered test automation concepts', 'Smart test optimization and integration', 'How industry demand is shifting'],
+    insight: '',
+  },
+];
+---
+
+<Base
+  title="QA Roadmap 2026 (Free)"
+  description="A free, practical 11-step roadmap for modern QA and automation engineers in 2026: QA mindset, coding, automation, API testing, frameworks, CI/CD, BiDi and AI with MCP."
+>
+  <section class="relative overflow-hidden border-b border-ink-100 dark:border-ink-800">
+    <div class="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(45,212,191,0.15),transparent_55%)]"></div>
+    <div class="container-x relative max-w-3xl py-12 sm:py-16">
+      <a href="/courses" class="text-sm font-semibold text-accent-700 print:hidden dark:text-accent-400">← All courses</a>
+      <div class="mt-6 flex flex-wrap items-center gap-2">
+        <span class="rounded-full bg-gradient-to-r from-accent-500 to-sky-500 px-3 py-1 text-xs font-bold uppercase tracking-wider text-white">Free</span>
+        <span class="chip">Self-paced · 11 steps</span>
+      </div>
+      <h1 class="mt-4 text-4xl font-extrabold sm:text-5xl">QA Roadmap 2026</h1>
+      <p class="mt-4 text-lg text-ink-600 dark:text-ink-300">
+        A practical guide for modern QA and automation engineers. AI, automation and continuous delivery are reshaping how we
+        ensure quality. These 11 steps will keep you relevant, competitive and valuable.
+      </p>
+      <p class="mt-3 italic text-ink-500 dark:text-ink-400">Tools will change, but fundamentals and mindset will always matter.</p>
+      <div class="mt-6 flex flex-wrap gap-3 print:hidden">
+        <a href="/qa-roadmap-2026.pdf" download="QA-Roadmap-2026-Ankit-Tripathi.pdf" class="btn-primary">Download free PDF ↓</a>
+        <a href="/qa-roadmap-2026.pdf" target="_blank" rel="noopener" class="btn-ghost">View PDF</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <ol class="container-x max-w-3xl space-y-6">
+      {
+        steps.map((s, i) => (
+          <li class="card relative break-inside-avoid overflow-hidden sm:!p-8">
+            <span class="absolute inset-y-0 left-0 w-1.5 bg-gradient-to-b from-accent-500 to-sky-500" />
+            <div class="flex items-start gap-4">
+              <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-accent-500/10 font-display text-lg font-extrabold text-accent-700 dark:text-accent-400">
+                {i + 1}
+              </span>
+              <div class="min-w-0">
+                <h2 class="text-xl font-extrabold sm:text-2xl">{s.title}</h2>
+                <p class="mt-2 text-ink-600 dark:text-ink-300">{s.intro}</p>
+                <ul class="mt-4 space-y-2">
+                  {s.points.map((p) => (
+                    <li class="flex gap-3 text-ink-700 dark:text-ink-200">
+                      <span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-accent-500" />
+                      {p}
+                    </li>
+                  ))}
+                </ul>
+                {s.insight && (
+                  <p class="mt-5 rounded-xl bg-accent-500/10 px-4 py-3 text-sm font-semibold text-accent-800 dark:text-accent-300">💡 {s.insight}</p>
+                )}
+              </div>
+            </div>
+          </li>
+        ))
+      }
+    </ol>
+
+    <div class="container-x mt-10 max-w-3xl">
+      <div class="rounded-3xl bg-ink-900 px-6 py-10 text-center dark:bg-ink-800">
+        <h2 class="text-2xl font-extrabold !text-white sm:text-3xl">Trust the process. Trust yourself.</h2>
+        <p class="mt-3 text-ink-200">Consistency beats speed. Curiosity beats fear.</p>
+        <p class="mt-6 text-sm text-ink-300">Want a personal roadmap and 1:1 guidance?</p>
+        <div class="mt-4 flex flex-wrap justify-center gap-3 print:hidden">
+          <a href="/services#career-mentoring" class="btn-primary">Career mentoring</a>
+          <a href="/services#mock-interviews" class="btn border border-white/20 text-white hover:bg-white/10">Mock interviews</a>
+        </div>
+      </div>
+      <div class="print:hidden">
+        <Share title="QA Roadmap 2026: a free 11-step guide for QA engineers" />
+      </div>
+    </div>
+  </section>
+
+  <div class="print:hidden"><CTA /></div>
+</Base>

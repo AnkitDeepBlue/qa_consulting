@@ -44,12 +44,18 @@ const {
                 <span class="mt-1.5 h-2 w-2 shrink-0 rounded-full bg-accent-500" />
                 <span>
                   <span class="block text-sm font-semibold text-ink-900 dark:text-white">{c.name}</span>
-                  {c.issuer !== 'Certification' && <span class="block text-xs text-ink-500 dark:text-ink-400">{c.issuer}</span>}
+                  <span class="block text-xs text-ink-500 dark:text-ink-400">
+                    {c.issuer}
+                    {c.verify && (
+                      <a href={c.verify} target="_blank" rel="noopener" class="ml-1 font-semibold text-accent-700 hover:underline dark:text-accent-400">Verify ↗</a>
+                    )}
+                  </span>
                 </span>
               </li>
             ))
           }
         </ul>
+        <a href="/about#credentials" class="mt-6 inline-block text-sm font-semibold text-accent-700 hover:underline dark:text-accent-400">View certificates & awards →</a>
       </div>
 
       <!-- Domains -->

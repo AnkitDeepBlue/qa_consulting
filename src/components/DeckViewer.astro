@@ -1,0 +1,72 @@
+---
+// Slide viewer for the selenium-python-ai-agent deck.
+// Drop exported slide images into src/assets/deck/ (e.g. 01.png … 09.png) and,
+// optionally, the PDF at public/selenium-agent-deck.pdf. Renders nothing until slides exist.
+import type { ImageMetadata } from 'astro';
+import { Image } from 'astro:assets';
+import fs from 'node:fs';
+
+const files = import.meta.glob<{ default: ImageMetadata }>('../assets/deck/*.{png,jpg,jpeg,webp}', { eager: true });
+const slides = Object.entries(files)
+  .sort(([a], [b]) => a.localeCompare(b, undefined, { numeric: true }))
+  .map(([, m]) => m.default);
+const hasPdf = fs.existsSync('public/selenium-agent-deck.pdf');
+---
+
+{
+  slides.length > 0 && (
+    <div id="deck" class="deck mt-6 scroll-mt-24 rounded-3xl border border-white/10 bg-white/[0.04] p-4 sm:p-6">
+      <div class="flex flex-wrap items-center justify-between gap-3">
+        <p class="text-sm font-semibold text-white">Product deck: selenium-python-ai-agent</p>
+        {hasPdf && (
+          <a href="/selenium-agent-deck.pdf" target="_blank" rel="noopener" class="text-sm font-semibold text-accent-300 hover:underline">
+            Download PDF ↓
+          </a>
+        )}
+      </div>
+      <div class="relative mt-4 overflow-hidden rounded-xl bg-black/40">
+        {slides.map((s, i) => (
+          <Image
+            src={s}
+            alt={`Slide ${i + 1} of ${slides.length}`}
+            widths={[640, 1024, 1440]}
+            sizes="(min-width: 1152px) 1088px, 100vw"
+            loading={i === 0 ? 'lazy' : 'lazy'}
+            data-slide={i}
+            class:list={['aspect-video w-full object-contain', i > 0 && 'hidden']}
+          />
+        ))}
+      </div>
+      <div class="mt-4 flex items-center justify-center gap-4">
+        <button type="button" data-prev class="rounded-full border border-white/15 px-4 py-2 text-sm font-semibold text-white hover:bg-white/10" aria-label="Previous slide">
+          ←
+        </button>
+        <span data-counter class="min-w-16 text-center text-sm text-ink-200">1 / {slides.length}</span>
+        <button type="button" data-next class="rounded-full border border-white/15 px-4 py-2 text-sm font-semibold text-white hover:bg-white/10" aria-label="Next slide">
+          →
+        </button>
+      </div>
+    </div>
+  )
+}
+
+<script>
+  document.querySelectorAll<HTMLElement>('.deck').forEach((deck) => {
+    const slides = [...deck.querySelectorAll<HTMLElement>('[data-slide]')];
+    const counter = deck.querySelector('[data-counter]')!;
+    let i = 0;
+    const show = (n: number) => {
+      slides[i].classList.add('hidden');
+      i = (n + slides.length) % slides.length;
+      slides[i].classList.remove('hidden');
+      counter.textContent = `${i + 1} / ${slides.length}`;
+    };
+    deck.querySelector('[data-prev]')?.addEventListener('click', () => show(i - 1));
+    deck.querySelector('[data-next]')?.addEventListener('click', () => show(i + 1));
+    deck.tabIndex = 0;
+    deck.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft') show(i - 1);
+      if (e.key === 'ArrowRight') show(i + 1);
+    });
+  });
+</script>

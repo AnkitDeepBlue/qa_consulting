@@ -36,7 +36,9 @@ const courses = (await getCollection('courses')).sort((a, b) => a.data.order - b
             </ul>
             <div class="mt-auto flex items-center justify-between gap-3 pt-6">
               <span class="text-sm text-ink-500 dark:text-ink-400">{c.data.duration}{c.data.price && ` · ${c.data.price}`}</span>
-              {c.data.status === 'available' && c.data.checkoutUrl ? (
+              {c.data.href ? (
+                <a href={c.data.href} class="btn-primary">Start free →</a>
+              ) : c.data.status === 'available' && c.data.checkoutUrl ? (
                 <a href={c.data.checkoutUrl} class="btn-primary">Enroll</a>
               ) : (
                 <a href={`/contact?course=${encodeURIComponent(c.data.title)}`} class="btn-ghost">Join waitlist</a>

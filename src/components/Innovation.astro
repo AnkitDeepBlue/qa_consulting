@@ -1,6 +1,11 @@
 ---
 import { innovations } from '../data/site';
 import Icon from './Icon.astro';
+import DeckViewer from './DeckViewer.astro';
+
+interface Props { showDeck?: boolean }
+const { showDeck = false } = Astro.props;
+const hasDeck = Object.keys(import.meta.glob('../assets/deck/*.{png,jpg,jpeg,webp}')).length > 0;
 ---
 
 <section class="section relative overflow-hidden bg-ink-950 text-white">
@@ -31,12 +36,19 @@ import Icon from './Icon.astro';
                 <span class="select-none text-ink-400">$ </span>{item.code}
               </div>
             )}
-            {item.link && (
-              <a href={item.link.href} target="_blank" rel="noopener" class="btn-primary mt-6 self-start">{item.link.label} ↗</a>
+            {(item.link || item.source) && (
+              <div class="mt-6 flex flex-wrap gap-3">
+                {item.link && <a href={item.link.href} target="_blank" rel="noopener" class="btn-primary">{item.link.label} ↗</a>}
+                {item.source && <a href={item.source} target="_blank" rel="noopener" class="btn border border-white/20 text-white hover:bg-white/10">Source on GitHub ↗</a>}
+                {i === 0 && hasDeck && (
+                  <a href={showDeck ? '#deck' : '/about#deck'} class="btn border border-white/20 text-white hover:bg-white/10">View the deck</a>
+                )}
+              </div>
             )}
           </article>
         ))
       }
     </div>
+    {showDeck && <DeckViewer />}
   </div>
 </section>
