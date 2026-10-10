@@ -11,12 +11,13 @@ interface Props {
   updatedDate?: Date;
   tags?: string[];
   author?: string;
+  postId: string;
   backHref: string;
   backLabel: string;
   sourceUrl?: string;
   sourceName?: string;
 }
-const { title, description, pubDate, updatedDate, tags = [], author, backHref, backLabel, sourceUrl, sourceName } = Astro.props;
+const { postId, title, description, pubDate, updatedDate, tags = [], author, backHref, backLabel, sourceUrl, sourceName } = Astro.props;
 const fmt = (d: Date) => d.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
 ---
 
@@ -46,7 +47,7 @@ const fmt = (d: Date) => d.toLocaleDateString('en-GB', { day: 'numeric', month: 
       )
     }
     <Share title={title} />
-    <Comments />
+    <Comments postId={postId} />
   </article>
   <CTA />
 </Base>

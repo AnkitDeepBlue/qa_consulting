@@ -10,6 +10,6 @@ const { post } = Astro.props;
 const { Content } = await render(post);
 ---
 
-<Post {...post.data} backHref="/blog" backLabel="All posts">
+<Post {...post.data} postId={`blog--${post.id}`} backHref="/blog" backLabel="All posts">
   <Content />
 </Post>

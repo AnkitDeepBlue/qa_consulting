@@ -1,49 +1,88 @@
 ---
-// Giscus: comments + reactions stored in GitHub Discussions. Renders nothing until configured in site.ts.
-import { giscus } from '../data/site';
-const enabled = Boolean(giscus.repoId && giscus.categoryId);
+// Comments + likes with Google sign-in (Firebase). Hidden until src/data/firebase.ts is filled in.
+import { firebaseConfig } from '../data/firebase';
+
+interface Props { postId: string }
+const { postId } = Astro.props;
+const enabled = Boolean(firebaseConfig.apiKey && firebaseConfig.projectId);
 ---
 
 {
   enabled && (
-    <section class="mt-12 border-t border-ink-100 pt-8 dark:border-ink-800" aria-label="Comments">
-      <h2 class="text-xl font-bold">Comments & reactions</h2>
-      <div id="giscus-container" class="mt-6" data-repo={giscus.repo} data-repo-id={giscus.repoId} data-category={giscus.category} data-category-id={giscus.categoryId} />
+    <section id="comments" class="mt-12 scroll-mt-24 border-t border-ink-100 pt-8 dark:border-ink-800" data-post-id={postId} aria-label="Comments">
+      <div class="flex flex-wrap items-center justify-between gap-4">
+        <h2 class="text-xl font-bold">
+          Comments <span data-count class="font-medium text-ink-400" />
+        </h2>
+        <button type="button" data-like class="btn-ghost !px-3 !py-2" aria-pressed="false" title="Like this post">
+          <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12 20s-7-4.4-7-10a4 4 0 017-2.6A4 4 0 0119 10c0 5.6-7 10-7 10z" />
+          </svg>
+          <span data-like-count>0</span>
+          <span class="sr-only">likes</span>
+        </button>
+      </div>
+
+      <div data-signed-out hidden class="card mt-6 items-center justify-between gap-4 sm:flex">
+        <p class="text-sm text-ink-600 dark:text-ink-300">Sign in with Google to like this post and join the discussion.</p>
+        <button type="button" data-signin class="btn-ghost mt-4 shrink-0 sm:mt-0">
+          <svg class="h-4 w-4" viewBox="0 0 48 48" aria-hidden="true">
+            <path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.7 32.7 29.2 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.4-.4-3.5z" />
+            <path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z" />
+            <path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.2 0-9.6-3.3-11.3-7.9l-6.5 5C9.5 39.6 16.2 44 24 44z" />
+            <path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.4-.4-3.5z" />
+          </svg>
+          Sign in with Google
+        </button>
+      </div>
+
+      <form data-form hidden class="card mt-6">
+        <div class="flex items-center gap-3">
+          <img data-me-photo class="h-8 w-8 rounded-full bg-ink-100" alt="" referrerpolicy="no-referrer" />
+          <span data-me-name class="text-sm font-semibold text-ink-900 dark:text-white" />
+          <button type="button" data-signout class="ml-auto text-xs text-ink-500 underline-offset-2 hover:underline">Sign out</button>
+        </div>
+        <label class="sr-only" for={`comment-${postId}`}>Your comment</label>
+        <textarea id={`comment-${postId}`} name="text" class="input mt-4 min-h-28" maxlength="2000" required placeholder="Share your thoughts or ask a question…" />
+        <div class="mt-3 flex flex-wrap items-center justify-between gap-3">
+          <p data-status class="text-sm" role="status" aria-live="polite" />
+          <button type="submit" class="btn-primary">Post comment</button>
+        </div>
+      </form>
+
+      <ol data-list class="mt-8 space-y-6" />
+      <p data-empty hidden class="mt-6 text-sm text-ink-500 dark:text-ink-400">No comments yet. Be the first to share your thoughts.</p>
+
+      <template data-item>
+        <li class="flex gap-3">
+          <img data-photo class="h-9 w-9 shrink-0 rounded-full bg-ink-100 dark:bg-ink-800" alt="" referrerpolicy="no-referrer" />
+          <div class="min-w-0 flex-1">
+            <div class="flex flex-wrap items-baseline gap-x-2">
+              <span data-name class="text-sm font-semibold text-ink-900 dark:text-white" />
+              <time data-date class="text-xs text-ink-500 dark:text-ink-400" />
+              <button type="button" data-delete hidden class="ml-auto text-xs text-red-600 hover:underline">Delete</button>
+            </div>
+            <p data-text class="mt-1 whitespace-pre-line break-words text-sm text-ink-700 dark:text-ink-200" />
+          </div>
+        </li>
+      </template>
     </section>
   )
 }
 
 <script>
-  const box = document.getElementById('giscus-container');
-  if (box) {
-    const theme = () => (document.documentElement.classList.contains('dark') ? 'dark_dimmed' : 'light');
-    const s = document.createElement('script');
-    s.src = 'https://giscus.app/client.js';
-    s.async = true;
-    s.crossOrigin = 'anonymous';
-    const attrs: Record<string, string> = {
-      'data-repo': box.dataset.repo!,
-      'data-repo-id': box.dataset.repoId!,
-      'data-category': box.dataset.category!,
-      'data-category-id': box.dataset.categoryId!,
-      'data-mapping': 'pathname',
-      'data-strict': '1',
-      'data-reactions-enabled': '1',
-      'data-emit-metadata': '0',
-      'data-input-position': 'top',
-      'data-theme': theme(),
-      'data-lang': 'en',
-      'data-loading': 'lazy',
-    };
-    Object.entries(attrs).forEach(([k, v]) => s.setAttribute(k, v));
-    box.appendChild(s);
-
-    // Keep the comment widget in sync with the site's dark-mode toggle.
-    new MutationObserver(() => {
-      document.querySelector<HTMLIFrameElement>('iframe.giscus-frame')?.contentWindow?.postMessage(
-        { giscus: { setConfig: { theme: theme() } } },
-        'https://giscus.app',
-      );
-    }).observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+  // Load Firebase only when the comments section is about to scroll into view.
+  const root = document.getElementById('comments');
+  if (root) {
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((e) => e.isIntersecting)) {
+          io.disconnect();
+          import('../lib/comments').then((m) => m.mountComments(root));
+        }
+      },
+      { rootMargin: '400px' },
+    );
+    io.observe(root);
   }
 </script>

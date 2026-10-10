@@ -50,6 +50,16 @@ Uses [Web3Forms](https://web3forms.com) (free). Get an access key with your emai
 `PUBLIC_WEB3FORMS_KEY` in `.env` (local) and in Vercel → Settings → Environment Variables.
 Without a key the Contact page shows an email button instead.
 
+## Comments & likes (Firebase)
+
+Blog and news posts have Google sign-in comments and likes, stored in Firestore
+(project `ankit-qa-consulting`, free Spark plan).
+
+- Config: `src/data/firebase.ts` · shared auth helper: `src/lib/firebase.ts` (reuse for course access)
+- Security rules: `firestore.rules` → paste into Firebase console → Firestore → Rules → Publish after any change
+- Moderation: sign in with the admin email and use **Delete** on any comment, or delete in the Firestore console
+- New hosting domain? Add it in Firebase → Authentication → Settings → Authorized domains
+
 ## Deploy to Vercel
 
 1. Push this repo to GitHub.
