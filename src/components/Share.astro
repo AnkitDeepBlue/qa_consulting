@@ -1,0 +1,47 @@
+---
+interface Props { title: string }
+const { title } = Astro.props;
+const url = new URL(Astro.url.pathname, Astro.site).toString();
+const u = encodeURIComponent(url);
+const t = encodeURIComponent(title);
+const links = [
+  { label: 'LinkedIn', href: `https://www.linkedin.com/sharing/share-offsite/?url=${u}`, d: 'M6 9v9 M6 6v.01 M10 18v-5a3 3 0 016 0v5 M10 11v7' },
+  { label: 'X', href: `https://x.com/intent/post?url=${u}&text=${t}`, d: 'M5 4l14 16 M19 4L5 20' },
+  { label: 'WhatsApp', href: `https://wa.me/?text=${t}%20${u}`, d: 'M4 20l1.3-4A8 8 0 1112 20a8 8 0 01-4-1.1L4 20z' },
+  { label: 'Email', href: `mailto:?subject=${t}&body=${u}`, d: 'M4 6h16v12H4z M4 7l8 6 8-6' },
+];
+---
+
+<div class="share mt-12 flex flex-wrap items-center gap-2 border-t border-ink-100 pt-6 dark:border-ink-800" data-url={url} data-title={title}>
+  <span class="mr-1 text-sm font-semibold text-ink-700 dark:text-ink-200">Share:</span>
+  {
+    links.map((l) => (
+      <a href={l.href} target="_blank" rel="noopener" class="btn-ghost !px-3 !py-2" aria-label={`Share on ${l.label}`} title={l.label}>
+        <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          {l.d.split(/ (?=M)/).map((p) => <path d={p} />)}
+        </svg>
+        <span class="hidden sm:inline">{l.label}</span>
+      </a>
+    ))
+  }
+  <button type="button" class="copy-link btn-ghost !px-3 !py-2">
+    <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 14a4 4 0 005.7 0l3-3a4 4 0 00-5.7-5.7l-1 1" /><path d="M14 10a4 4 0 00-5.7 0l-3 3a4 4 0 005.7 5.7l1-1" /></svg>
+    <span class="copy-label">Copy link</span>
+  </button>
+</div>
+
+<script>
+  document.querySelectorAll<HTMLElement>('.share').forEach((el) => {
+    const btn = el.querySelector<HTMLButtonElement>('.copy-link');
+    const label = el.querySelector('.copy-label');
+    btn?.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(el.dataset.url!);
+        if (label) label.textContent = 'Copied!';
+      } catch {
+        if (label) label.textContent = 'Copy failed';
+      }
+      setTimeout(() => label && (label.textContent = 'Copy link'), 2000);
+    });
+  });
+</script>

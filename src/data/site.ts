@@ -216,3 +216,12 @@ export const education = [
   { title: 'B.Tech, Information Technology', place: 'Dr. A.P.J. Abdul Kalam Technical University', year: '2013' },
   { title: 'Post Graduate Diploma in Software Testing', place: 'QACampus', year: '2013' },
 ];
+
+// Comments & reactions on blog/news posts (https://giscus.app).
+// Fill repoId/categoryId from giscus.app after enabling Discussions on the repo.
+export const giscus = {
+  repo: 'AnkitDeepBlue/qa_consulting',
+  repoId: 'R_kgDOVDZIyg',
+  category: 'Announcements',
+  categoryId: 'DIC_kwDOVDZIys4DHec1',
+};

@@ -1,0 +1,49 @@
+---
+// Giscus: comments + reactions stored in GitHub Discussions. Renders nothing until configured in site.ts.
+import { giscus } from '../data/site';
+const enabled = Boolean(giscus.repoId && giscus.categoryId);
+---
+
+{
+  enabled && (
+    <section class="mt-12 border-t border-ink-100 pt-8 dark:border-ink-800" aria-label="Comments">
+      <h2 class="text-xl font-bold">Comments & reactions</h2>
+      <div id="giscus-container" class="mt-6" data-repo={giscus.repo} data-repo-id={giscus.repoId} data-category={giscus.category} data-category-id={giscus.categoryId} />
+    </section>
+  )
+}
+
+<script>
+  const box = document.getElementById('giscus-container');
+  if (box) {
+    const theme = () => (document.documentElement.classList.contains('dark') ? 'dark_dimmed' : 'light');
+    const s = document.createElement('script');
+    s.src = 'https://giscus.app/client.js';
+    s.async = true;
+    s.crossOrigin = 'anonymous';
+    const attrs: Record<string, string> = {
+      'data-repo': box.dataset.repo!,
+      'data-repo-id': box.dataset.repoId!,
+      'data-category': box.dataset.category!,
+      'data-category-id': box.dataset.categoryId!,
+      'data-mapping': 'pathname',
+      'data-strict': '1',
+      'data-reactions-enabled': '1',
+      'data-emit-metadata': '0',
+      'data-input-position': 'top',
+      'data-theme': theme(),
+      'data-lang': 'en',
+      'data-loading': 'lazy',
+    };
+    Object.entries(attrs).forEach(([k, v]) => s.setAttribute(k, v));
+    box.appendChild(s);
+
+    // Keep the comment widget in sync with the site's dark-mode toggle.
+    new MutationObserver(() => {
+      document.querySelector<HTMLIFrameElement>('iframe.giscus-frame')?.contentWindow?.postMessage(
+        { giscus: { setConfig: { theme: theme() } } },
+        'https://giscus.app',
+      );
+    }).observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+  }
+</script>
