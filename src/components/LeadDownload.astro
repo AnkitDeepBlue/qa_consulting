@@ -1,0 +1,90 @@
+---
+// Email-gated download: saves the email to Firestore (leads collection), then starts the download.
+// The download is never blocked: if saving fails, the visitor still gets the file.
+interface Props {
+  pdf: string; // public path, e.g. /qa-roadmap-2026.pdf
+  filename: string; // suggested download name
+  source: string; // where the lead came from, e.g. "qa-roadmap-2026"
+}
+const { pdf, filename, source } = Astro.props;
+---
+
+<div class="lead-download max-w-xl print:hidden" data-pdf={pdf} data-filename={filename} data-source={source}>
+  <form class="lead-form rounded-2xl border border-ink-100 bg-white p-5 shadow-sm dark:border-ink-800 dark:bg-ink-900" novalidate>
+    <p class="text-sm font-semibold text-ink-900 dark:text-white">Get the free PDF: enter your email to download</p>
+    <div class="mt-3 flex flex-col gap-3 sm:flex-row">
+      <label class="sr-only" for={`lead-email-${source}`}>Email address</label>
+      <input id={`lead-email-${source}`} name="email" type="email" required autocomplete="email" placeholder="you@example.com" class="input flex-1" />
+      <button type="submit" class="btn-primary shrink-0">Download free PDF ↓</button>
+    </div>
+    <label class="mt-3 flex items-start gap-2 text-xs text-ink-600 dark:text-ink-300">
+      <input name="newsletter" type="checkbox" class="mt-0.5 h-4 w-4 accent-accent-600" />
+      Also send me the monthly QA newsletter. Unsubscribe anytime.
+    </label>
+    <p class="lead-status mt-2 text-sm" role="status" aria-live="polite"></p>
+  </form>
+  <div class="lead-done hidden rounded-2xl border border-accent-500/30 bg-accent-500/10 p-5">
+    <p class="font-semibold text-ink-900 dark:text-white">Your download has started. Thank you!</p>
+    <p class="mt-1 text-sm text-ink-600 dark:text-ink-300">
+      Didn't start? <a class="lead-link font-semibold text-accent-700 underline dark:text-accent-400" href={pdf} download={filename}>Download the PDF</a>
+    </p>
+  </div>
+</div>
+
+<script>
+  const KEY = 'lead-download-done';
+
+  function startDownload(pdf: string, filename: string) {
+    const a = document.createElement('a');
+    a.href = pdf;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+  }
+
+  document.querySelectorAll<HTMLElement>('.lead-download').forEach((root) => {
+    const { pdf, filename, source } = root.dataset as { pdf: string; filename: string; source: string };
+    const form = root.querySelector<HTMLFormElement>('.lead-form')!;
+    const done = root.querySelector<HTMLElement>('.lead-done')!;
+    const status = root.querySelector<HTMLElement>('.lead-status')!;
+    const showDone = () => {
+      form.classList.add('hidden');
+      done.classList.remove('hidden');
+    };
+
+    // Returning visitors who already shared their email skip the form.
+    try {
+      if (localStorage.getItem(KEY)) showDone();
+    } catch {}
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = (form.elements.namedItem('email') as HTMLInputElement).value.trim();
+      const newsletter = (form.elements.namedItem('newsletter') as HTMLInputElement).checked;
+      if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
+        status.textContent = 'Please enter a valid email address.';
+        status.className = 'lead-status mt-2 text-sm text-red-600';
+        return;
+      }
+      const btn = form.querySelector<HTMLButtonElement>('button[type=submit]')!;
+      btn.disabled = true;
+      status.textContent = 'Preparing your download…';
+      status.className = 'lead-status mt-2 text-sm text-ink-500';
+      try {
+        const [{ db }, { addDoc, collection, serverTimestamp }] = await Promise.all([
+          import('../lib/firebase'),
+          import('firebase/firestore'),
+        ]);
+        await addDoc(collection(db, 'leads'), { email: email.slice(0, 254), source, newsletter, createdAt: serverTimestamp() });
+      } catch {
+        // Never block the download on a storage error.
+      }
+      try {
+        localStorage.setItem(KEY, '1');
+      } catch {}
+      startDownload(pdf, filename);
+      showDone();
+    });
+  });
+</script>
