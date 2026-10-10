@@ -89,7 +89,7 @@ export const services: Service[] = [
   {
     slug: 'qa-audit',
     audience: 'organizations',
-    title: 'QA Audit & Process Rebuild',
+    title: 'QA Audit & Improvement',
     summary:
       'Releases slipping, bugs escaping, flaky suites nobody trusts? I audit your current QA practice end to end and hand you a prioritized roadmap to fix it.',
     forWho: 'Established teams and organizations',
@@ -229,10 +229,20 @@ export const services: Service[] = [
 ];
 
 export const process = [
-  { step: '01', title: 'Discovery call', text: 'A free 30-minute call to understand your product, team and quality pain points.' },
-  { step: '02', title: 'Assessment', text: 'I review your process, tooling and coverage and share clear findings.' },
-  { step: '03', title: 'Roadmap', text: 'A prioritized plan with scope, timeline and measurable outcomes.' },
-  { step: '04', title: 'Execution', text: 'I build, coach and hand over, so the quality engine keeps running without me.' },
+  { step: '01', title: 'Understand your problem', text: 'A free 30-minute call where I listen to your challenges, goals and constraints.' },
+  { step: '02', title: 'Diagnose', text: 'I review your process, tooling and coverage to find the root cause, not just the symptoms.' },
+  { step: '03', title: 'Design your solution', text: 'A customized plan for your product, team and tools, with clear scope and measurable outcomes.' },
+  { step: '04', title: 'Implement & hand over', text: 'I implement it with your team and hand over, so the results last after I leave.' },
+];
+
+// "Sound familiar?" problem → solution pairs (Services page). `slug` links to a service.
+export const problems = [
+  { problem: 'We have no real QA process, and bugs keep reaching customers.', solution: 'A QA process, test strategy and quality gates designed for how your team ships.', slug: 'qa-setup' },
+  { problem: 'Regression testing takes days and slows every release.', solution: 'Automation built for your stack, with AI-driven self-healing to keep it fast.', slug: 'automation-framework' },
+  { problem: 'Our automation is flaky, and nobody trusts the results.', solution: 'An audit to find the root causes, then stabilization of the suite your team already has.', slug: 'qa-audit' },
+  { problem: 'Releases slip because testing happens too late.', solution: 'Shift-left quality gates wired into your CI/CD pipeline.', slug: 'cicd-quality-gates' },
+  { problem: "We're shipping AI features and don't know how to test them.", solution: 'A testing strategy for AI/ML products, plus agentic AI in your own testing.', slug: 'ai-testing' },
+  { problem: 'Our QA team needs stronger automation skills.', solution: 'Hands-on training on your stack and codebase, not generic theory.', slug: 'team-training' },
 ];
 
 // Project impact stories for the portfolio (About page). Client names withheld.
