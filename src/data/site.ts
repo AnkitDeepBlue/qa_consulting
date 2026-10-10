@@ -26,7 +26,7 @@ export const stats = [
   { value: '12+', label: 'Years in QA & Quality Engineering' },
   { value: '~90%', label: 'Manual testing effort reduced with AI-driven automation' },
   { value: '~80%', label: 'Faster regression cycles with self-healing tests in CI/CD' },
-  { value: '25+', label: 'QA engineers led across concurrent projects' },
+  { value: '100+', label: 'QA engineers led and mentored in total' },
 ];
 
 // Employers. Text only (no logos) to avoid implying endorsement.

@@ -60,7 +60,7 @@
 }
 
 @utility section {
-  @apply py-16 sm:py-24;
+  @apply py-12 sm:py-16;
 }
 
 @utility chip {
