@@ -7,6 +7,6 @@ status: available
 badge: "Prep material included"
 href: "/contact?service=Mock%20Interviews%20%26%20Interview%20Prep"
 cta: "Book a session →"
-order: 1
+order: 2
 topics: ["Mock rounds: manual QA, automation/SDET and lead", "Live coding: Python, Selenium, Playwright, API", "Interview question bank and prep notes", "Resume and LinkedIn profile review", "Detailed feedback and improvement plan"]
 ---

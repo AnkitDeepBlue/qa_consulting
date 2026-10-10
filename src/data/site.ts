@@ -162,6 +162,23 @@ export const services: Service[] = [
     icon: 'M3 8l9-4 9 4-9 4-9-4z M7 10v5c3 2 7 2 10 0v-5',
   },
   {
+    slug: 'zero-to-hero-bootcamp',
+    audience: 'professionals',
+    title: 'QA Zero to Hero Bootcamp',
+    summary:
+      'SQA Concepts to Automation to AI Testing to Live Project: personal 1:1 coaching that takes you from testing fundamentals to a job-ready QA automation profile.',
+    forWho: 'Freshers, professionals after a career gap and QA job seekers',
+    deliverables: [
+      'SQA concepts, test design and Agile',
+      'Python, Selenium, Playwright and API automation',
+      'AI testing: self-healing, agents and MCP',
+      'Live project with your own framework on GitHub',
+      'Resume, LinkedIn and mock interviews; material included',
+    ],
+    icon: 'M12 3l2.5 5 5.5.8-4 3.9 1 5.5L12 15.6 7 18.2l1-5.5-4-3.9 5.5-.8z',
+    href: '/courses/qa-zero-to-hero-bootcamp',
+  },
+  {
     slug: 'mock-interviews',
     audience: 'professionals',
     title: 'Mock Interviews & Interview Prep',

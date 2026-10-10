@@ -55,7 +55,7 @@ const engagements = [
                   <p class="mt-1 text-sm font-medium text-accent-700 dark:text-accent-400">Best for: {s.forWho}</p>
                   <p class="mt-4 text-ink-600 dark:text-ink-300">{s.summary}</p>
                   <a href={s.href ?? `/contact?service=${encodeURIComponent(s.title)}`} class="btn-ghost mt-6">
-                    {s.href ? 'Browse courses →' : 'Enquire about this →'}
+                    {s.href === '/courses' ? 'Browse courses →' : s.href ? 'View details →' : 'Enquire about this →'}
                   </a>
                 </div>
                 <div class="rounded-xl bg-ink-50 p-6 dark:bg-ink-950/60">
