@@ -1,0 +1,157 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import CTA from '../components/CTA.astro';
+import photo from '../assets/ankit.webp';
+import { site, experience, certifications, awards, domains, skills, education } from '../data/site';
+---
+
+<Base title="About" description="Ankit Tripathi: Senior Lead SDET and Test Architect with 12+ years in QA, test automation and AI-driven quality engineering.">
+  <section class="border-b border-ink-100 bg-gradient-to-b from-ink-50 to-white dark:border-ink-800 dark:from-ink-900 dark:to-ink-950">
+    <div class="container-x grid items-center gap-12 py-14 sm:py-20 lg:grid-cols-[1.4fr_1fr]">
+      <div>
+        <p class="eyebrow">About</p>
+        <h1 class="mt-3 text-4xl font-extrabold sm:text-5xl">Hi, I'm Ankit Tripathi.</h1>
+        <p class="mt-2 text-lg font-medium text-ink-700 dark:text-ink-200">Senior Lead SDET · Test Architect · QA Consultant</p>
+        <div class="mt-6 space-y-4 text-ink-600 dark:text-ink-300">
+          <p>
+            For over 12 years I have helped teams make sure software is built right, delivered fast and trusted in production.
+            My foundation is deep QA (strategy, architecture and execution), and I layer agentic and AI-driven test automation
+            on top to make quality scalable and intelligent.
+          </p>
+          <p>
+            I have a keen eye for process gaps. Whether a new organization is building QA from scratch or an existing one needs
+            rebuilding, I establish the processes and best practices that turn testing into a quality engine: test strategy,
+            tooling stack, QA workflows, QA audits and automation roadmaps.
+          </p>
+          <p>
+            I have led and mentored 25+ QA engineers, including many moving from manual testing (SQA) into automation (SDET),
+            across AI/ML, BFSI, healthcare, big data, automobile and networking products.
+          </p>
+        </div>
+        <div class="mt-8 flex flex-wrap gap-3">
+          <a href="/contact" class="btn-primary">Work with me</a>
+          <a href={site.linkedin} target="_blank" rel="noopener" class="btn-ghost">LinkedIn ↗</a>
+        </div>
+      </div>
+      <Image
+        src={photo}
+        alt="Portrait of Ankit Tripathi"
+        widths={[320, 480, 640]}
+        sizes="(min-width: 1024px) 400px, 80vw"
+        class="mx-auto aspect-square w-full max-w-sm rounded-[1.75rem] object-cover shadow-xl"
+      />
+    </div>
+  </section>
+
+  <!-- Highlights -->
+  <section class="section">
+    <div class="container-x grid gap-6 md:grid-cols-3">
+      <div class="card">
+        <Icon d="M13 3L4 14h7l-1 7 9-11h-7l1-7z" class="h-7 w-7 text-accent-600 dark:text-accent-400" />
+        <h2 class="mt-4 text-lg font-bold">AI-driven automation</h2>
+        <p class="mt-2 text-sm text-ink-600 dark:text-ink-300">Reduced manual testing effort by ~90% and cut regression cycle time by ~80% with agentic AI and self-healing tests in CI/CD.</p>
+      </div>
+      <div class="card">
+        <Icon d="M12 2l3 6 6 1-4.5 4.5L18 20l-6-3-6 3 1.5-6.5L3 9l6-1 3-6z" class="h-7 w-7 text-accent-600 dark:text-accent-400" />
+        <h2 class="mt-4 text-lg font-bold">Open-source creator</h2>
+        <p class="mt-2 text-sm text-ink-600 dark:text-ink-300">
+          Author of <a class="font-semibold text-accent-700 underline-offset-2 hover:underline dark:text-accent-400" href={site.pypi} target="_blank" rel="noopener">selenium-python-ai-agent</a>, a multi-agent LLM framework (Planner, Generator, Healer) for Selenium Python.
+        </p>
+      </div>
+      <div class="card">
+        <Icon d="M6 3h9l4 4v14H6z M14 3v5h5 M9 13h7 M9 17h5" class="h-7 w-7 text-accent-600 dark:text-accent-400" />
+        <h2 class="mt-4 text-lg font-bold">Published research</h2>
+        <p class="mt-2 text-sm text-ink-600 dark:text-ink-300">Author of <em>Reverse Build Testing</em>, a peer-reviewed white paper published in Quest Journals.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Experience -->
+  <section class="section border-t border-ink-100 dark:border-ink-800">
+    <div class="container-x grid gap-12 lg:grid-cols-[1fr_2fr]">
+      <div>
+        <p class="eyebrow">Experience</p>
+        <h2 class="mt-3 text-3xl font-extrabold">12+ years of shipping quality</h2>
+        <p class="mt-4 text-ink-600 dark:text-ink-300">From hands-on QA engineer to test architect and QA leader under SAFe Agile, owning strategy, delivery and stakeholders.</p>
+      </div>
+      <ol class="relative space-y-10 border-l-2 border-ink-100 pl-8 dark:border-ink-800">
+        {
+          experience.map((e) => (
+            <li class="relative">
+              <span class="absolute -left-[41px] top-1.5 h-4 w-4 rounded-full border-4 border-white bg-accent-500 dark:border-ink-950" />
+              <p class="text-xs font-semibold uppercase tracking-wider text-ink-500 dark:text-ink-400">{e.period}</p>
+              <h3 class="mt-1 text-lg font-bold">{e.role}</h3>
+              <p class="text-sm font-medium text-accent-700 dark:text-accent-400">{e.company}</p>
+              <ul class="mt-3 list-disc space-y-1.5 pl-5 text-sm text-ink-600 marker:text-ink-300 dark:text-ink-300">
+                {e.points.map((p) => <li>{p}</li>)}
+              </ul>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <!-- Skills -->
+  <section class="section bg-ink-50 dark:bg-ink-900">
+    <div class="container-x">
+      <p class="eyebrow">Toolbox</p>
+      <h2 class="mt-3 text-3xl font-extrabold">Skills & technologies</h2>
+      <div class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {
+          Object.entries(skills).map(([group, items]) => (
+            <div class="card">
+              <h3 class="font-bold">{group}</h3>
+              <ul class="mt-4 flex flex-wrap gap-2">{items.map((s) => <li class="chip">{s}</li>)}</ul>
+            </div>
+          ))
+        }
+        <div class="card">
+          <h3 class="font-bold">Domains</h3>
+          <ul class="mt-4 flex flex-wrap gap-2">{domains.map((s) => <li class="chip">{s}</li>)}</ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Certs / awards / education -->
+  <section class="section">
+    <div class="container-x grid gap-10 lg:grid-cols-3">
+      <div>
+        <h2 class="text-2xl font-extrabold">Certifications</h2>
+        <ul class="mt-5 space-y-2.5">
+          {certifications.map((c) => (
+            <li class="flex gap-3 text-sm text-ink-700 dark:text-ink-200">
+              <Icon d="M5 13l4 4L19 7" class="mt-0.5 h-4 w-4 shrink-0 text-accent-600 dark:text-accent-400" />{c}
+            </li>
+          ))}
+        </ul>
+      </div>
+      <div>
+        <h2 class="text-2xl font-extrabold">Awards</h2>
+        <ul class="mt-5 space-y-2.5">
+          {awards.map((c) => (
+            <li class="flex gap-3 text-sm text-ink-700 dark:text-ink-200">
+              <Icon d="M12 2l3 6 6 1-4.5 4.5L18 20l-6-3-6 3 1.5-6.5L3 9l6-1 3-6z" class="mt-0.5 h-4 w-4 shrink-0 text-accent-600 dark:text-accent-400" />{c}
+            </li>
+          ))}
+        </ul>
+      </div>
+      <div>
+        <h2 class="text-2xl font-extrabold">Education</h2>
+        <ul class="mt-5 space-y-4">
+          {education.map((e) => (
+            <li>
+              <p class="text-sm font-semibold text-ink-900 dark:text-white">{e.title}</p>
+              <p class="text-sm text-ink-600 dark:text-ink-300">{e.place} · {e.year}</p>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <CTA title="Let's talk about your quality goals" />
+</Base>

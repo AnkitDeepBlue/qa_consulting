@@ -1,0 +1,128 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHeader from '../components/PageHeader.astro';
+import Icon from '../components/Icon.astro';
+import { site, services } from '../data/site';
+
+// Free Web3Forms key (see .env.example). Without it the form falls back to email.
+const formKey = import.meta.env.PUBLIC_WEB3FORMS_KEY;
+---
+
+<Base title="Contact" description="Get in touch with Ankit Tripathi for QA consulting, test automation, AI-driven testing or team training.">
+  <PageHeader
+    eyebrow="Contact"
+    title="Let's talk about your quality goals"
+    intro="Tell me a little about your product and team. I reply within one business day, and the first 30-minute discovery call is free."
+  />
+
+  <section class="section">
+    <div class="container-x grid gap-10 lg:grid-cols-[1.5fr_1fr]">
+      <div class="card lg:p-10">
+        {
+          formKey ? (
+            <form id="contact-form" action="https://api.web3forms.com/submit" method="POST" class="grid gap-5 sm:grid-cols-2">
+              <input type="hidden" name="access_key" value={formKey} />
+              <input type="hidden" name="subject" value="New enquiry from QA consulting website" />
+              <input type="hidden" name="from_name" value={site.brand} />
+              <input type="checkbox" name="botcheck" class="hidden" style="display:none" tabindex="-1" autocomplete="off" />
+
+              <label class="grid gap-1.5 text-sm font-medium">
+                Name *<input class="input" name="name" required autocomplete="name" />
+              </label>
+              <label class="grid gap-1.5 text-sm font-medium">
+                Work email *<input class="input" type="email" name="email" required autocomplete="email" />
+              </label>
+              <label class="grid gap-1.5 text-sm font-medium">
+                Company<input class="input" name="company" autocomplete="organization" />
+              </label>
+              <label class="grid gap-1.5 text-sm font-medium">
+                I'm interested in
+                <select class="input" name="interest">
+                  {services.map((s) => <option>{s.title}</option>)}
+                  <option>Courses</option>
+                  <option>Something else</option>
+                </select>
+              </label>
+              <label class="grid gap-1.5 text-sm font-medium sm:col-span-2">
+                How can I help? *
+                <textarea class="input min-h-36" name="message" required placeholder="Your product, team size, current QA setup and what you'd like to improve." />
+              </label>
+              <div class="flex flex-wrap items-center gap-4 sm:col-span-2">
+                <button type="submit" class="btn-primary">Send message</button>
+                <p id="form-status" class="text-sm" role="status" aria-live="polite"></p>
+              </div>
+            </form>
+          ) : (
+            <div>
+              <h2 class="text-xl font-bold">Email me directly</h2>
+              <p class="mt-2 text-ink-600 dark:text-ink-300">Share your product, team size and what you'd like to improve.</p>
+              <a class="btn-primary mt-6" href={`mailto:${site.email}?subject=QA%20consulting%20enquiry`}>Write an email</a>
+            </div>
+          )
+        }
+      </div>
+
+      <aside class="space-y-6">
+        <div class="card">
+          <h2 class="text-lg font-bold">Direct contact</h2>
+          <ul class="mt-4 space-y-4 text-sm">
+            <li class="flex items-start gap-3">
+              <Icon d="M4 6h16v12H4z M4 7l8 6 8-6" class="h-5 w-5 shrink-0 text-accent-600 dark:text-accent-400" />
+              <a class="break-all hover:text-accent-700 dark:hover:text-accent-400" href={`mailto:${site.email}`}>{site.email}</a>
+            </li>
+            <li class="flex items-start gap-3">
+              <Icon d="M6 9v9 M6 6v.01 M10 18v-5a3 3 0 016 0v5 M10 11v7 M4 3h16v18H4z" class="h-5 w-5 shrink-0 text-accent-600 dark:text-accent-400" />
+              <a class="hover:text-accent-700 dark:hover:text-accent-400" href={site.linkedin} target="_blank" rel="noopener">Connect on LinkedIn</a>
+            </li>
+            <li class="flex items-start gap-3">
+              <Icon d="M12 21s-7-6.2-7-11a7 7 0 0114 0c0 4.8-7 11-7 11z M12 10v.01" class="h-5 w-5 shrink-0 text-accent-600 dark:text-accent-400" />
+              <span>{site.location}</span>
+            </li>
+          </ul>
+        </div>
+        <div class="card">
+          <h2 class="text-lg font-bold">What happens next</h2>
+          <ol class="mt-4 space-y-3 text-sm text-ink-600 dark:text-ink-300">
+            <li><strong class="text-ink-900 dark:text-white">1.</strong> I reply within one business day.</li>
+            <li><strong class="text-ink-900 dark:text-white">2.</strong> We have a free 30-minute discovery call.</li>
+            <li><strong class="text-ink-900 dark:text-white">3.</strong> You get a short proposal with scope and timeline.</li>
+          </ol>
+        </div>
+      </aside>
+    </div>
+  </section>
+</Base>
+
+<script>
+  const form = document.getElementById('contact-form') as HTMLFormElement | null;
+  const status = document.getElementById('form-status');
+
+  // Prefill when arriving from a course "Join waitlist" link.
+  const course = new URLSearchParams(location.search).get('course');
+  if (form && course) {
+    (form.elements.namedItem('interest') as HTMLSelectElement).value = 'Courses';
+    (form.elements.namedItem('message') as HTMLTextAreaElement).value = `Please add me to the waitlist for "${course}".`;
+  }
+
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (!status) return;
+    status.textContent = 'Sending…';
+    status.className = 'text-sm text-ink-500';
+    try {
+      const res = await fetch(form.action, {
+        method: 'POST',
+        headers: { Accept: 'application/json' },
+        body: new FormData(form),
+      });
+      const json = await res.json();
+      if (!res.ok || !json.success) throw new Error(json.message || 'Failed');
+      form.reset();
+      status.textContent = 'Thanks! Your message is on its way. I will reply within one business day.';
+      status.className = 'text-sm text-accent-700 dark:text-accent-400';
+    } catch {
+      status.textContent = 'Something went wrong. Please email me directly instead.';
+      status.className = 'text-sm text-red-600';
+    }
+  });
+</script>

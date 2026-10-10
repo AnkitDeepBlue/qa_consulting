@@ -1,0 +1,51 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import PageHeader from '../../components/PageHeader.astro';
+import CTA from '../../components/CTA.astro';
+
+const courses = (await getCollection('courses')).sort((a, b) => a.data.order - b.data.order);
+---
+
+<Base title="Courses" description="Hands-on QA and test automation courses by Ankit Tripathi: Python, Selenium, Playwright, API testing and AI in testing.">
+  <PageHeader
+    eyebrow="Courses"
+    title="Learn test automation from a practitioner"
+    intro="Hands-on courses built from 12+ years of real projects. Join the waitlist and get early-bird access when a course launches."
+  />
+  <section class="section">
+    <div class="container-x grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+      {
+        courses.map((c) => (
+          <article class="card flex flex-col">
+            <div class="flex items-center justify-between gap-2">
+              <span class="chip">{c.data.level}</span>
+              <span
+                class:list={[
+                  'text-xs font-semibold uppercase tracking-wider',
+                  c.data.status === 'available' ? 'text-accent-700 dark:text-accent-400' : 'text-ink-400',
+                ]}
+              >
+                {c.data.status === 'available' ? 'Available' : 'Coming soon'}
+              </span>
+            </div>
+            <h2 class="mt-4 text-xl font-bold">{c.data.title}</h2>
+            <p class="mt-2 text-sm text-ink-600 dark:text-ink-300">{c.data.description}</p>
+            <ul class="mt-4 space-y-1.5 text-sm text-ink-700 dark:text-ink-200">
+              {c.data.topics.map((t) => <li class="flex gap-2"><span class="text-accent-600 dark:text-accent-400">▸</span>{t}</li>)}
+            </ul>
+            <div class="mt-auto flex items-center justify-between gap-3 pt-6">
+              <span class="text-sm text-ink-500 dark:text-ink-400">{c.data.duration}{c.data.price && ` · ${c.data.price}`}</span>
+              {c.data.status === 'available' && c.data.checkoutUrl ? (
+                <a href={c.data.checkoutUrl} class="btn-primary">Enroll</a>
+              ) : (
+                <a href={`/contact?course=${encodeURIComponent(c.data.title)}`} class="btn-ghost">Join waitlist</a>
+              )}
+            </div>
+          </article>
+        ))
+      }
+    </div>
+  </section>
+  <CTA title="Need private training for your team?" text="I run tailored, hands-on workshops for QA teams, online or on-site. Let's design one around your stack." />
+</Base>

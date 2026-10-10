@@ -1,0 +1,10 @@
+---
+// Renders a 24x24 stroke icon from path data ("M..." segments separated by spaces before M).
+interface Props { d: string; class?: string }
+const { d, class: cls = 'h-6 w-6' } = Astro.props;
+const paths = d.split(/ (?=M)/);
+---
+
+<svg class={cls} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+  {paths.map((p) => <path d={p} />)}
+</svg>

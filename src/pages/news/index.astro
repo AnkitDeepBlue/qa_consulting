@@ -1,0 +1,31 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import PageHeader from '../../components/PageHeader.astro';
+import PostCard from '../../components/PostCard.astro';
+
+const items = (await getCollection('news', ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+);
+---
+
+<Base title="QA News" description="Curated news and releases from the software testing world: tools, frameworks, AI in testing and industry trends.">
+  <PageHeader eyebrow="QA News" title="What's new in software testing" intro="Curated, summarized updates on testing tools, frameworks, AI in QA and industry trends, with my take on why they matter.">
+    <a href="/news/rss.xml" class="btn-ghost mt-6">Subscribe via RSS</a>
+  </PageHeader>
+  <section class="section">
+    <div class="container-x">
+      {
+        items.length ? (
+          <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {items.map((p) => (
+              <PostCard href={`/news/${p.id}`} title={p.data.title} description={p.data.description} date={p.data.pubDate} source={p.data.sourceName} tags={p.data.tags} />
+            ))}
+          </div>
+        ) : (
+          <p class="text-ink-600 dark:text-ink-300">News updates are on the way.</p>
+        )
+      }
+    </div>
+  </section>
+</Base>

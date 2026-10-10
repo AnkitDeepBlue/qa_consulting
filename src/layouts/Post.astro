@@ -1,0 +1,48 @@
+---
+import Base from './Base.astro';
+import CTA from '../components/CTA.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  pubDate: Date;
+  updatedDate?: Date;
+  tags?: string[];
+  author?: string;
+  backHref: string;
+  backLabel: string;
+  sourceUrl?: string;
+  sourceName?: string;
+}
+const { title, description, pubDate, updatedDate, tags = [], author, backHref, backLabel, sourceUrl, sourceName } = Astro.props;
+const fmt = (d: Date) => d.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+---
+
+<Base title={title} description={description} type="article">
+  <article class="container-x max-w-3xl py-14 sm:py-20">
+    <a href={backHref} class="text-sm font-semibold text-accent-700 dark:text-accent-400">← {backLabel}</a>
+    <h1 class="mt-6 text-3xl font-extrabold leading-tight sm:text-5xl">{title}</h1>
+    <p class="mt-4 text-lg text-ink-600 dark:text-ink-300">{description}</p>
+    <div class="mt-6 flex flex-wrap items-center gap-x-3 gap-y-2 border-b border-ink-100 pb-6 text-sm text-ink-500 dark:border-ink-800 dark:text-ink-400">
+      {author && <span class="font-medium text-ink-700 dark:text-ink-200">{author}</span>}
+      <span aria-hidden="true">·</span>
+      <time datetime={pubDate.toISOString()}>{fmt(pubDate)}</time>
+      {updatedDate && <span>(updated {fmt(updatedDate)})</span>}
+      {tags.map((t) => <span class="chip">{t}</span>)}
+    </div>
+    <div class="prose prose-lg mt-10 max-w-none dark:prose-invert prose-headings:font-display prose-a:text-accent-700 dark:prose-a:text-accent-400">
+      <slot />
+    </div>
+    {
+      sourceUrl && (
+        <p class="mt-10 rounded-xl bg-ink-50 p-4 text-sm text-ink-600 dark:bg-ink-900 dark:text-ink-300">
+          Source:{' '}
+          <a class="font-semibold text-accent-700 underline dark:text-accent-400" href={sourceUrl} target="_blank" rel="noopener nofollow">
+            {sourceName ?? sourceUrl}
+          </a>
+        </p>
+      )
+    }
+  </article>
+  <CTA />
+</Base>
