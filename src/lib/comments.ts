@@ -6,7 +6,7 @@ import {
   addDoc, collection, deleteDoc, doc, getCountFromServer, getDoc, getDocs,
   limit, orderBy, query, serverTimestamp, setDoc, type Timestamp,
 } from 'firebase/firestore';
-import { db, isAdmin, onUser, signInWithGoogle, signOutUser } from './firebase';
+import { db, isAdmin, onUser, signInWithGithub, signInWithGoogle, signOutUser } from './firebase';
 
 const $ = <T extends Element>(root: Element, sel: string) => root.querySelector<T>(sel)!;
 
@@ -81,12 +81,15 @@ export function mountComments(root: HTMLElement) {
     renderLike();
   }
 
-  async function signIn() {
+  async function signIn(provider: 'google' | 'github') {
     try {
-      await signInWithGoogle();
+      await (provider === 'github' ? signInWithGithub() : signInWithGoogle());
     } catch (e) {
       const code = (e as { code?: string }).code;
-      if (code !== 'auth/popup-closed-by-user' && code !== 'auth/cancelled-popup-request') {
+      if (code === 'auth/popup-closed-by-user' || code === 'auth/cancelled-popup-request') return;
+      if (code === 'auth/account-exists-with-different-credential') {
+        alert('You have signed in here before with the other option using the same email. Please use that one.');
+      } else {
         alert('Sign-in failed. Please allow pop-ups for this site and try again.');
       }
     }
@@ -105,11 +108,16 @@ export function mountComments(root: HTMLElement) {
     loadLikes().catch(() => {});
   });
 
-  $(root, '[data-signin]').addEventListener('click', signIn);
+  root.querySelectorAll<HTMLButtonElement>('[data-signin]').forEach((b) =>
+    b.addEventListener('click', () => signIn(b.dataset.signin as 'google' | 'github')),
+  );
   $(form, '[data-signout]').addEventListener('click', () => signOutUser());
 
   likeBtn.addEventListener('click', async () => {
-    if (!user) return signIn();
+    if (!user) {
+      signedOut.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      return;
+    }
     likeBtn.disabled = true;
     try {
       const ref = doc(likesCol, user.uid);

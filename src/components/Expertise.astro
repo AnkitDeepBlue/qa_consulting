@@ -1,0 +1,75 @@
+---
+import { skills, certifications, domains } from '../data/site';
+import Icon from './Icon.astro';
+interface Props { heading?: string; intro?: string }
+const {
+  heading = 'Skills, certifications & industries',
+  intro = 'A deep, hands-on toolbox backed by industry certifications and delivery experience across six domains.',
+} = Astro.props;
+---
+
+<section class="section bg-ink-50 dark:bg-ink-900">
+  <div class="container-x">
+    <p class="eyebrow">Expertise</p>
+    <h2 class="mt-3 text-3xl font-extrabold sm:text-4xl">{heading}</h2>
+    <p class="mt-3 max-w-2xl text-ink-600 dark:text-ink-300">{intro}</p>
+
+    <div class="mt-10 grid gap-6 lg:grid-cols-3">
+      <!-- Skills -->
+      <div class="card lg:col-span-2">
+        <h3 class="flex items-center gap-2 text-lg font-bold">
+          <Icon d="M8 9l-4 3 4 3 M16 9l4 3-4 3 M13 6l-2 12" class="h-5 w-5 text-accent-600 dark:text-accent-400" />Skills
+        </h3>
+        <dl class="mt-5 space-y-4">
+          {
+            Object.entries(skills).map(([group, items]) => (
+              <div class="grid gap-2 sm:grid-cols-[150px_1fr] sm:items-start">
+                <dt class="pt-1 text-sm font-semibold text-ink-900 dark:text-white">{group}</dt>
+                <dd class="flex flex-wrap gap-1.5">{items.map((s) => <span class="chip">{s}</span>)}</dd>
+              </div>
+            ))
+          }
+        </dl>
+      </div>
+
+      <!-- Certifications -->
+      <div class="card">
+        <h3 class="flex items-center gap-2 text-lg font-bold">
+          <Icon d="M12 3l7 3v5c0 4.5-3 8-7 10-4-2-7-5.5-7-10V6l7-3z M9 12l2 2 4-4" class="h-5 w-5 text-accent-600 dark:text-accent-400" />Certifications
+        </h3>
+        <ul class="mt-5 space-y-3">
+          {
+            certifications.map((c) => (
+              <li class="flex items-start gap-3">
+                <span class="mt-1.5 h-2 w-2 shrink-0 rounded-full bg-accent-500" />
+                <span>
+                  <span class="block text-sm font-semibold text-ink-900 dark:text-white">{c.name}</span>
+                  {c.issuer !== 'Certification' && <span class="block text-xs text-ink-500 dark:text-ink-400">{c.issuer}</span>}
+                </span>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <!-- Domains -->
+      <div class="card lg:col-span-3">
+        <h3 class="flex items-center gap-2 text-lg font-bold">
+          <Icon d="M12 3a9 9 0 100 18 9 9 0 000-18z M3 12h18 M12 3c2.5 2.5 3.5 5.5 3.5 9s-1 6.5-3.5 9c-2.5-2.5-3.5-5.5-3.5-9s1-6.5 3.5-9z" class="h-5 w-5 text-accent-600 dark:text-accent-400" />Industries & domains
+        </h3>
+        <ul class="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
+          {
+            domains.map((d) => (
+              <li class="flex flex-col items-center gap-2 rounded-xl border border-ink-100 bg-ink-50 p-4 text-center dark:border-ink-800 dark:bg-ink-950/60">
+                <span class="flex h-10 w-10 items-center justify-center rounded-lg bg-accent-500/10 text-accent-700 dark:text-accent-400">
+                  <Icon d={d.icon} class="h-5 w-5" />
+                </span>
+                <span class="text-sm font-semibold text-ink-800 dark:text-ink-100">{d.name}</span>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>

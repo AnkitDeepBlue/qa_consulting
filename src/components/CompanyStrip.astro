@@ -1,0 +1,21 @@
+---
+import { companies } from '../data/site';
+interface Props { title?: string }
+const { title = '12+ years delivering quality at global MNCs' } = Astro.props;
+---
+
+<section class="border-y border-ink-100 bg-white dark:border-ink-800 dark:bg-ink-950">
+  <div class="container-x py-10">
+    <p class="text-center text-xs font-semibold uppercase tracking-[0.2em] text-ink-500 dark:text-ink-400">{title}</p>
+    <ul class="mt-7 grid grid-cols-2 gap-x-6 gap-y-6 sm:grid-cols-3 lg:grid-cols-5">
+      {
+        companies.map((c) => (
+          <li class="text-center">
+            <p class="font-display text-lg font-extrabold tracking-tight text-ink-700 sm:text-xl dark:text-ink-100">{c.name}</p>
+            <p class="mt-0.5 text-xs text-ink-500 dark:text-ink-400">{c.note}</p>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>

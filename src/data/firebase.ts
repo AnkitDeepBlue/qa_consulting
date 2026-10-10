@@ -13,3 +13,7 @@ export const firebaseConfig = {
 // Signed-in users with these emails can delete any comment (moderation).
 // Keep in sync with isAdmin() in firestore.rules.
 export const adminEmails = ['ankit.deepblue@gmail.com'];
+
+// GitHub sign-in alongside Google. Needs a GitHub OAuth App configured in
+// Firebase → Authentication → Sign-in method → GitHub before turning on.
+export const githubSignIn = false;

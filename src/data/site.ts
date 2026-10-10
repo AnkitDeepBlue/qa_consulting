@@ -4,9 +4,9 @@ export const site = {
   brand: 'Ankit Tripathi QA Consulting',
   shortBrand: 'Ankit Tripathi',
   tagline: 'QA & Test Automation Consulting',
-  title: 'Ankit Tripathi | QA Consultant & Test Automation Architect',
+  title: 'Ankit Tripathi | QA Consultant & AI-Driven Test Automation Architect',
   description:
-    'Independent QA consulting by Ankit Tripathi: test strategy, QA process setup, automation frameworks and AI-driven testing for startups and established organizations.',
+    'Independent QA consulting by Ankit Tripathi: test strategy, QA process setup, AI-driven test automation, QA audits, team training and interview prep for startups, enterprises and QA professionals.',
   email: 'ankit.deepblue@gmail.com',
   linkedin: 'https://www.linkedin.com/in/ankit-tripathi-b8b63a103',
   pypi: 'https://pypi.org/project/selenium-python-ai-agent/',
@@ -29,18 +29,49 @@ export const stats = [
   { value: '25+', label: 'QA engineers led across concurrent projects' },
 ];
 
+// Employers. Text only (no logos) to avoid implying endorsement.
+export const companies = [
+  { name: 'GlobalLogic', note: 'A Hitachi Group Company' },
+  { name: 'LTIMindtree', note: 'Larsen & Toubro Group' },
+  { name: 'Persistent Systems', note: 'Global IT services' },
+  { name: 'Iris Software', note: 'Enterprise IT services' },
+  { name: 'Newgen Software', note: 'Enterprise BFSI products' },
+];
+
+export const innovations = [
+  {
+    kind: 'Open Source · PyPI',
+    title: 'selenium-python-ai-agent',
+    text: 'An open-source multi-agent LLM framework that plans, generates and self-heals Selenium Python test suites. It writes maintainable Page Object Model code (pytest / pytest-bdd), runs from CLI or CI, and verifies every self-heal against the live DOM.',
+    tags: ['Planner', 'Generator', 'Healer', 'Claude & OpenAI', 'CI-ready'],
+    code: 'pip install selenium-python-ai-agent',
+    link: { href: 'https://pypi.org/project/selenium-python-ai-agent/', label: 'View on PyPI' } as { href: string; label: string } | null,
+  },
+  {
+    kind: 'Peer-reviewed · Quest Journals',
+    title: 'Reverse Build Testing',
+    text: 'A peer-reviewed white paper I authored and published in Quest Journals, contributing original research on software testing practice to the wider QA community.',
+    tags: ['White paper', 'Research', 'Published'],
+    code: '',
+    link: null as { href: string; label: string } | null,
+  },
+];
+
 export type Service = {
   slug: string;
+  audience: 'organizations' | 'professionals';
   title: string;
   summary: string;
   forWho: string;
   deliverables: string[];
   icon: string; // inline SVG path data (24x24, stroke)
+  href?: string; // optional dedicated page
 };
 
 export const services: Service[] = [
   {
     slug: 'qa-setup',
+    audience: 'organizations',
     title: 'QA Setup from Scratch',
     summary:
       'Building a product with no formal QA? I set up the whole quality function: strategy, process, tooling and the first automation suite, so your team ships with confidence from day one.',
@@ -55,6 +86,7 @@ export const services: Service[] = [
   },
   {
     slug: 'qa-audit',
+    audience: 'organizations',
     title: 'QA Audit & Process Rebuild',
     summary:
       'Releases slipping, bugs escaping, flaky suites nobody trusts? I audit your current QA practice end to end and hand you a prioritized roadmap to fix it.',
@@ -69,6 +101,7 @@ export const services: Service[] = [
   },
   {
     slug: 'automation-framework',
+    audience: 'organizations',
     title: 'Test Automation Framework',
     summary:
       'Enterprise-grade UI and API automation built from the ground up, POC to production, using the stack that fits your product.',
@@ -83,6 +116,7 @@ export const services: Service[] = [
   },
   {
     slug: 'ai-testing',
+    audience: 'organizations',
     title: 'AI-Driven & Agentic Testing',
     summary:
       'Layer LLM-powered test generation and self-healing automation on top of solid QA foundations, and test your own AI/ML features properly.',
@@ -97,6 +131,7 @@ export const services: Service[] = [
   },
   {
     slug: 'cicd-quality-gates',
+    audience: 'organizations',
     title: 'CI/CD Quality Gates',
     summary:
       'Shift-left testing wired into your pipelines so defects are caught early and every release is backed by evidence.',
@@ -110,18 +145,65 @@ export const services: Service[] = [
     icon: 'M4 12h4l2-5 4 10 2-5h4',
   },
   {
-    slug: 'mentoring',
-    title: 'Training & Mentoring',
+    slug: 'team-training',
+    audience: 'organizations',
+    title: 'Team Training & Workshops',
     summary:
-      'Upskill your QA team, from manual testers moving to automation (SQA to SDET) to leads learning test architecture and AI in testing.',
-    forWho: 'QA teams and individual engineers',
+      'Hands-on workshops that upskill your QA team on the stack you actually use, from automation fundamentals to AI in testing.',
+    forWho: 'QA and engineering teams',
     deliverables: [
-      'Hands-on automation workshops (Python, Selenium, Playwright)',
-      'SQA → SDET career transition coaching',
-      'Code reviews and framework design sessions',
-      'ISTQB-aligned fundamentals and test design techniques',
+      'Python, Selenium, Playwright and API automation workshops',
+      'AI-assisted testing and agentic automation sessions',
+      'ISTQB-aligned test design techniques',
+      'Online or on-site, tailored to your codebase',
     ],
     icon: 'M3 8l9-4 9 4-9 4-9-4z M7 10v5c3 2 7 2 10 0v-5',
+  },
+  {
+    slug: 'mock-interviews',
+    audience: 'professionals',
+    title: 'Mock Interviews & Interview Prep',
+    summary:
+      'Preparing for a QA, SDET or Test Lead role? Practise with someone who has hired and led QA teams, and walk into the real interview confident.',
+    forWho: 'QA engineers, SDETs and leads switching jobs',
+    deliverables: [
+      'Realistic mock rounds: manual QA, automation, SDET and lead',
+      'Live coding practice: Python, Selenium, Playwright, API testing',
+      'Detailed feedback with a personal improvement plan',
+      'Resume and LinkedIn profile review',
+    ],
+    icon: 'M4 5h16v11H8l-4 4V5z M8 9h8 M8 12h5',
+  },
+  {
+    slug: 'career-mentoring',
+    audience: 'professionals',
+    title: 'Career Mentoring (SQA → SDET)',
+    summary:
+      'Moving from manual testing to automation, or stepping up to a lead role? Get a clear roadmap and regular 1:1 guidance from a practitioner.',
+    forWho: 'Manual testers and growing SDETs',
+    deliverables: [
+      'Personalised learning roadmap for your target role',
+      'Regular 1:1 sessions and progress check-ins',
+      'Code and framework reviews on your own projects',
+      'Guidance on certifications such as ISTQB',
+    ],
+    icon: 'M12 4a4 4 0 110 8 4 4 0 010-8z M4 20c1.5-4 4.5-6 8-6s6.5 2 8 6',
+  },
+  {
+    slug: 'online-courses',
+    audience: 'professionals',
+    title: 'Online Courses',
+    summary:
+      'Self-paced, hands-on courses on Selenium, Playwright and AI-driven test automation, built from 12+ years of real projects.',
+    forWho: 'Anyone learning test automation',
+    deliverables: [
+      'Project-based lessons you can apply at work',
+      'Beginner to advanced tracks',
+      'Real framework code, not toy examples',
+      'Early-bird access for waitlist members',
+    ],
+    icon: 'M4 5h16v11H4z M9 20h6 M12 16v4 M10 8.5l4 2-4 2z',
+    href: '/courses',
   },
 ];
 
@@ -132,16 +214,49 @@ export const process = [
   { step: '04', title: 'Execution', text: 'I build, coach and hand over, so the quality engine keeps running without me.' },
 ];
 
+// Project impact stories for the portfolio (About page). Client names withheld.
+export const highlights = [
+  {
+    domain: 'AI/ML SaaS',
+    title: 'Enterprise AI/ML forecasting platform',
+    text: 'Owned QA and test architecture end to end. Designed a hybrid UI + API framework (Python, Playwright, Selenium, Pytest-BDD) and wired agentic, self-healing tests into nightly and regression pipelines.',
+    result: '~80% faster regression cycles',
+  },
+  {
+    domain: 'Healthcare & Genomics',
+    title: 'Regulated genomics programs',
+    text: 'Led QA teams across concurrent projects. Built a DSL-driven framework that turns Jama test cases into executable pytest-bdd tests, plus shift-left quality gates in Jenkins and GitHub Actions.',
+    result: 'Traceable, automated compliance testing',
+  },
+  {
+    domain: 'Clinical Research',
+    title: '21 CFR Part 11 clinical platform',
+    text: 'Owned the full STLC for a compliance-driven platform. Built keyword-driven and BDD frameworks with Robot Framework and Python, with API validations aligned to regulatory standards.',
+    result: 'Continuous testing in a regulated domain',
+  },
+  {
+    domain: 'BFSI',
+    title: 'Banking, KYC & loan origination products',
+    text: 'Replaced hard-to-manage Postman collections across interdependent microservices with a Python API framework, Allure reporting and CI/CD integration.',
+    result: 'Adopted as the team-wide API standard',
+  },
+];
+
 export const experience = [
   {
     role: 'Consultant · Senior Lead SDET & Test Architect',
-    company: 'GlobalLogic',
+    company: 'GlobalLogic (Hitachi Group)',
     period: 'Mar 2025 – Present',
     points: [
       'Own QA, test strategy and test architecture for an enterprise AI/ML SaaS platform',
-      'Designed a hybrid UI + API framework with Python, Playwright, Selenium and Pytest-BDD',
       'Integrated agentic AI and self-healing tests into CI/CD, cutting regression time ~80%',
     ],
+  },
+  {
+    role: 'Senior Specialist · Software Engineer',
+    company: 'LTIMindtree',
+    period: 'Jan 2025 – Mar 2025',
+    points: ['Built an automation tool for big data testing'],
   },
   {
     role: 'Senior Lead Quality Engineer · SDET & Automation Lead',
@@ -149,51 +264,40 @@ export const experience = [
     period: 'Dec 2022 – Jan 2025',
     points: [
       'Led QA teams across concurrent projects in regulated healthcare and genomics',
-      'Built a DSL-driven framework that turns Jama test cases into executable pytest-bdd tests',
-      'Introduced shift-left quality gates in Jenkins and GitHub Actions',
+      'Built a DSL-driven framework that turns Jama test cases into executable tests',
     ],
   },
   {
     role: 'Lead QA Analyst · Test Automation Lead',
     company: 'Iris Software',
     period: 'Feb 2022 – Dec 2022',
-    points: [
-      'Led QA for a compliance-driven clinical research platform (21 CFR Part 11)',
-      'Built keyword-driven and BDD frameworks with Robot Framework, Selenium and Python',
-    ],
+    points: ['Led QA for a compliance-driven clinical research platform (21 CFR Part 11)'],
   },
   {
     role: 'Associate Consultant · QA Lead',
-    company: 'GlobalLogic',
+    company: 'GlobalLogic (Hitachi Group)',
     period: 'Apr 2021 – Jan 2022',
-    points: [
-      'Owned the QA stream for a health insurance platform, from POC to production automation',
-      'Established QA best practices that measurably improved team productivity',
-    ],
+    points: ['Owned the QA stream for a health insurance platform, POC to production automation'],
   },
   {
     role: 'Senior Quality Analyst · QA Automation Engineer',
     company: 'Newgen Software',
     period: 'Nov 2013 – Apr 2021',
-    points: [
-      'Delivered enterprise releases across banking, KYC, loan origination and automobile platforms',
-      'Replaced unmanageable Postman collections with a Python API framework, adopted team-wide',
-      'Trained campus-hired QA engineers in manual testing and Selenium Python',
-    ],
+    points: ['Delivered enterprise BFSI and automobile releases; trained campus-hired QA engineers'],
   },
 ];
 
 export const certifications = [
-  'ISTQB® Certified Tester',
-  'SAFe® POPM (Product Owner / Product Manager)',
-  'PCAP™ Certified Associate in Python Programming',
-  'AI Developer',
-  'Agentic AI (LangChain)',
-  'Subject Matter Expert, Test Automation Python (Level 4)',
-  'Six Sigma White Belt',
-  'Data Science',
-  'Lambda Selenium Python 101',
-  'Functionize AI Testing',
+  { name: 'ISTQB® Certified Tester', issuer: 'ISTQB' },
+  { name: 'SAFe® POPM', issuer: 'Scaled Agile' },
+  { name: 'PCAP™ Certified Associate in Python', issuer: 'Python Institute' },
+  { name: 'AI Developer', issuer: 'Certification' },
+  { name: 'Agentic AI (LangChain)', issuer: 'Certification' },
+  { name: 'Data Science', issuer: 'Certification' },
+  { name: 'Six Sigma White Belt', issuer: 'Certification' },
+  { name: 'Lambda Selenium Python 101', issuer: 'LambdaTest' },
+  { name: 'SME, Test Automation Python (L4)', issuer: 'Internal certification' },
+  { name: 'Functionize AI Testing', issuer: 'Functionize' },
 ];
 
 export const awards = [
@@ -202,14 +306,21 @@ export const awards = [
   'Excellence Award and Pat on the Back recognitions',
 ];
 
-export const domains = ['AI/ML & Forecasting', 'BFSI', 'Healthcare & Genomics', 'Big Data', 'Automobile', 'Networking'];
+export const domains = [
+  { name: 'AI/ML & Forecasting', icon: 'M4 19h16 M5 15l4-4 3 3 6-7' },
+  { name: 'BFSI', icon: 'M3 10l9-5 9 5 M5 10v8 M9.5 10v8 M14.5 10v8 M19 10v8 M3 20h18' },
+  { name: 'Healthcare & Genomics', icon: 'M10 4h4v6h6v4h-6v6h-4v-6H4v-4h6z' },
+  { name: 'Big Data', icon: 'M4 6c0-1.7 3.6-3 8-3s8 1.3 8 3-3.6 3-8 3-8-1.3-8-3z M4 6v12c0 1.7 3.6 3 8 3s8-1.3 8-3V6 M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3' },
+  { name: 'Automobile', icon: 'M5 16h14 M6 16l1.5-5h9L18 16 M7 16v2 M17 16v2' },
+  { name: 'Networking', icon: 'M9 3h6v6H9z M12 9v4 M5 15v-2h14v2 M3 15h4v5H3z M10 15h4v5h-4z M17 15h4v5h-4z' },
+];
 
 export const skills = {
   'Test Automation': ['Python', 'Playwright', 'Selenium', 'Robot Framework', 'Pytest', 'Pytest-BDD', 'POM', 'DSL frameworks'],
+  'AI in Testing': ['Agentic AI', 'LLM test generation', 'Self-healing tests', 'MCP', 'LangChain', 'Claude', 'OpenAI'],
   'API & Backend': ['REST', 'SOAP', 'python-requests', 'Postman', 'SoapUI', 'Microservices', 'ETL', 'Allure'],
-  'AI in Testing': ['Agentic AI', 'LLM test generation', 'Self-healing tests', 'MCP', 'Claude', 'OpenAI'],
   'CI/CD & Cloud': ['Jenkins', 'GitHub Actions', 'Azure DevOps', 'AWS', 'Airflow', 'Grafana'],
-  'Process & Leadership': ['Test strategy', 'QA audits', 'SAFe / Scrum', 'Shift-left', 'STLC', 'Mentoring'],
+  'QA Leadership': ['Test strategy', 'QA audits', 'SAFe / Scrum', 'Shift-left', 'STLC', 'Stakeholder management', 'Mentoring'],
 };
 
 export const education = [

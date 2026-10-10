@@ -39,7 +39,6 @@ const formKey = import.meta.env.PUBLIC_WEB3FORMS_KEY;
                 I'm interested in
                 <select class="input" name="interest">
                   {services.map((s) => <option>{s.title}</option>)}
-                  <option>Courses</option>
                   <option>Something else</option>
                 </select>
               </label>
@@ -97,11 +96,18 @@ const formKey = import.meta.env.PUBLIC_WEB3FORMS_KEY;
   const form = document.getElementById('contact-form') as HTMLFormElement | null;
   const status = document.getElementById('form-status');
 
-  // Prefill when arriving from a course "Join waitlist" link.
-  const course = new URLSearchParams(location.search).get('course');
-  if (form && course) {
-    (form.elements.namedItem('interest') as HTMLSelectElement).value = 'Courses';
-    (form.elements.namedItem('message') as HTMLTextAreaElement).value = `Please add me to the waitlist for "${course}".`;
+  // Prefill from links: /contact?course=... (course waitlist) or /contact?service=...
+  const params = new URLSearchParams(location.search);
+  const course = params.get('course');
+  const service = params.get('service');
+  if (form && (course || service)) {
+    const interest = form.elements.namedItem('interest') as HTMLSelectElement;
+    if (course) {
+      interest.value = 'Online Courses';
+      (form.elements.namedItem('message') as HTMLTextAreaElement).value = `Please add me to the waitlist for "${course}".`;
+    } else if (service && [...interest.options].some((o) => o.value === service)) {
+      interest.value = service;
+    }
   }
 
   form?.addEventListener('submit', async (e) => {
